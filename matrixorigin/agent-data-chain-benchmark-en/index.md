@@ -42,15 +42,16 @@ One Agent log dataset, the same 20 queries, with queries running while writes ar
 | 1M | 100 | **30,929** | 2,096 | 4,753 | 20,367 | 372 |
 | 1M | 500 | **29,719** | failed | 17,091 | 21,408 | 373 |
 | 10M | 10 | **7,987** | 1,255 | 536 | — | — |
+| 10M | 50 | **14,559** | 1,710 | 2,466 | — | — |
 | 10M | 100 | **15,762** | 1,548 | 4,713 | — | — |
 | 10M | 500 | 16,453 | failed | **16,481** | — | — |
 | 100M | 10 | **10,320** | 636 | 542 | out of scope | out of scope |
 
-Rows per second. **MatrixOne finishes first in 7 of the 9 valid tiers.**
+Rows per second. **MatrixOne finishes first in 7 of the 9 valid tiers** (10M/500 is 0.2% behind ClickHouse and is counted as a tie).
 
 The more useful number is not the 7. It is this: **going from 50 writers to 500 writers — 10x the concurrency — throughput moves from 31,473 to 29,719, a 5.6% drop.**
 
-In the same table: ClickHouse reaches 17,091 at 500 writers (its write path scales with concurrency); Doris' 500-writer runs failed outright; DuckDB is pinned at 373 throughout — throughput flat, while write latency climbs from 190 ms to 8,723 ms.
+In the same table: ClickHouse reaches 17,091 at 500 writers (its write path scales with concurrency); Doris' 500-writer runs failed outright; DuckDB sits at 370–380 throughout — throughput flat, while write latency climbs from 190 ms to 8,723 ms.
 
 ![Write throughput across five databases and four concurrency levels](./images/write-throughput.png)
 
